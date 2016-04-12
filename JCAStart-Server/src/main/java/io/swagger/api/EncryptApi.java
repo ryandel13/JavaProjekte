@@ -63,12 +63,11 @@ public class EncryptApi {
       throws NotFoundException {
       
       try {
-          JCAStartModel jcm = new JCAStartModel();
+          JCAStartModel jsm = new JCAStartModel();
          
-          String pKey = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("privateKey.pem"));
-          String encSecret = jcm.decryptSecretWithPrivateKey(pKey, secret);
-          
-          String out = jcm.decryptStringWithSecret(encSecret, message);
+          String strPrivate = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("privateKey.pem"));
+          String decSecret = jsm.decryptSecretWithPrivateKey(strPrivate, secret);
+          String out = jsm.decryptStringWithSecret(message, decSecret);
           
           return new ResponseEntity<String>(out, HttpStatus.OK);
       } catch (NoSuchAlgorithmException ex) {
